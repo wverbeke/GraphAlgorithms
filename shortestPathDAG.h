@@ -8,7 +8,7 @@
 #include "topologicalSort.h"
 
 
-std::vector< int > shortestPathDAG( const GraphLW& graph, const int start_node ){
+template< typename T > std::vector< int > shortestPathDAG( const GraphLW< T >& graph, const int start_node ){
 
     auto topSort = topologicalSort( graph );
 
@@ -33,7 +33,7 @@ std::vector< int > shortestPathDAG( const GraphLW& graph, const int start_node )
 
 
 
-std::vector< int > longestPathDAG( GraphLW& graph, const int start_node ){
+template< typename T > std::vector< int > longestPathDAG( GraphLW< T >& graph, const int start_node ){
     graph.invertWeights();
     auto path = shortestPathDAG( graph, start_node );
     for( auto& entry : path ){

@@ -4,7 +4,7 @@
 
 #include <list>
 #include <map>
-//#include <limits>
+#include <limits>
 #include <vector>
 
 
@@ -44,22 +44,6 @@ class GraphL{
 
 
 //adjecency list implementation of weighted graph
-/*
-class Edge{
-    public:
-        Edge( int t, int w ) : _to( t ), _weight( w ) {}
-        Edge( std::initializer_list< int > init ) : _to( *init.begin() ), _weight( *( init.begin() + 1 ) ) {}
-        int to() const{ return _to; }
-        int weight() const{ return _weight; }
-
-        void setWeight( int weight ){ _weight = weight; }
-
-    private:
-        int _to;
-        int _weight;
-};
-*/
-
 
 template< typename T > class Edge{
     public:
@@ -128,12 +112,6 @@ template< typename T > class GraphMW{
         }
         GraphMW( const std::vector< std::vector< T > >& weights ) : _weights( weights ) {}
 
-        //inefficient, but easy for small testing
-        //void addNode( int i, const std::vector< Edge< T > >& edges ){
-        //    if( i!= _weights.size() ) return;
-        //    auto newWeights = std::vector< std::vector< T > >( i, std::vector< T >( i, std::numeric_limits< T >::infinity() );
-        //}
-
         const std::vector< T >& operator[]( size_type i ) const{ return _weights[i]; }
         std::vector< T >& operator[]( size_type i ){ return _weights[i]; }
         const std::vector< std::vector< T > >& weights() const{ return _weights; }
@@ -144,42 +122,5 @@ template< typename T > class GraphMW{
         std::vector< std::vector< T > > _weights;
 };
 
-
-
-/*
-class GraphLW{
-
-    public:
-        using iterator = std::map< int, std::list< Edge > >::iterator;
-        using const_iterator = std::map< int, std::list< Edge > >::const_iterator;
-
-        GraphLW() = default;
-        void addNode( int i, const std::list< Edge >& l ){ _adjecency_lists[ i ] = l; }
-        const std::list< Edge >& adList( int i ) const{ return _adjecency_lists.at( i ); }
-
-        size_t numNodes() const{ return _adjecency_lists.size(); }
-    
-        iterator begin(){ return _adjecency_lists.begin(); }
-        const_iterator begin() const{ return _adjecency_lists.cbegin(); }
-        const_iterator cbegin() const{ return _adjecency_lists.cbegin(); }
-        
-        iterator end(){ return _adjecency_lists.end(); }
-        const_iterator end() const{ return _adjecency_lists.cend(); }
-        const_iterator cend() const{ return _adjecency_lists.cend(); }
-
-        void invertWeights(){
-            for( auto& entry : _adjecency_lists ){
-                auto& l = entry.second;
-                for( auto& e : l ){
-                    e.setWeight( -1*e.weight() );
-                }
-            }
-        }
-
-    private:
-        std::map< int, std::list< Edge > > _adjecency_lists;
-
-};
-*/
 
 #endif

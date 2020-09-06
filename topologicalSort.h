@@ -67,7 +67,7 @@ std::vector< int > topologicalSort_optimized( const GraphL& graph ){
 
 
 
-int dfs( const GraphLW& graph, int current_index, int start_node, std::vector< bool >& visited, std::vector< int >& ordering ){
+template< typename T > int dfs( const GraphLW< T >& graph, int current_index, int start_node, std::vector< bool >& visited, std::vector< int >& ordering ){
     visited[ start_node ] = true;
     for( const auto& edge : graph.adList( start_node ) ){
         if( visited[ edge.to() ] ) continue;
@@ -81,7 +81,7 @@ int dfs( const GraphLW& graph, int current_index, int start_node, std::vector< b
 
 
 
-std::vector< int > topologicalSort( const GraphLW& graph ){
+template< typename T > std::vector< int > topologicalSort( const GraphLW< T >& graph ){
 
     std::vector< bool > visited( graph.numNodes(), false );
     std::vector< int > ordering( graph.numNodes() );

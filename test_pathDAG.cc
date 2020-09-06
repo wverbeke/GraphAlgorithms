@@ -3,8 +3,8 @@
 #include "shortestPathDAG.h"
 
 
-GraphLW test_graph(){
-    GraphLW ret;
+GraphLW<int> test_graph(){
+    GraphLW<int> ret;
     ret.addNode( 0, { {1,3}, {2,6} } );
     ret.addNode( 1, { {2,4}, {3,4}, {4,11} } );
     ret.addNode( 2, { {3,8}, {6,11} } );
