@@ -29,5 +29,10 @@ int main(){
     for( auto& edge : bridges ){
         std::cout << edge << std::endl;
     }
+
+    auto aps = findArticulationPoints( graph );
+    for( auto& ap : aps ){
+        std::cout << "articulation point at " << ap << std::endl;
+    }
     return 0;
 }
