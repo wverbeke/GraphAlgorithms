@@ -24,10 +24,11 @@ int main(){
     auto graph = test_graph();
     auto connectedComponents = tarjan( graph );
 
-    for( const auto& entry : connectedComponents ){
-        std::cout << "Nodes in component " << entry.first << " : ";
-        for( const auto& node : entry.second ){
-            std::cout << node << ", ";
+    for( auto& entry : connectedComponents ){
+        std::cout << "connected components in group " << entry.first << " : ";
+        for( auto it = entry.second.cbegin(); it != entry.second.cend(); ++it ){
+            std::cout << *it;
+            if( it != entry.second.cend() - 1 ) std::cout << ", ";
         }
         std::cout << std::endl;
     }

@@ -6,6 +6,7 @@
 #include <map>
 #include <limits>
 #include <vector>
+#include <iostream>
 
 
 //adjecently list implementation of unweighted graph
@@ -49,6 +50,8 @@ template< typename T > class Edge{
     public:
         Edge( int t, T w ) : _to( t ), _weight( w ) {}
         Edge( int f, int t, T w ) : _from( f ), _to( t ), _weight( w ) {}
+
+        //this constructor is actually not OK since different types are used...
         Edge( std::initializer_list< int > init ) : _to( *init.begin() ), _weight( *( init.begin() + 1 ) ) {}
 
         int to() const{ return _to; }
@@ -59,7 +62,7 @@ template< typename T > class Edge{
 
     private:
         int _to;
-        int _weight;
+        T _weight;
         int _from = -1;
 };
 
