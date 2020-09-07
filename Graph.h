@@ -48,9 +48,11 @@ class GraphL{
 template< typename T > class Edge{
     public:
         Edge( int t, T w ) : _to( t ), _weight( w ) {}
+        Edge( int f, int t, T w ) : _from( f ), _to( t ), _weight( w ) {}
         Edge( std::initializer_list< int > init ) : _to( *init.begin() ), _weight( *( init.begin() + 1 ) ) {}
 
         int to() const{ return _to; }
+        int from() const{ return _from; }
         T weight() const{ return _weight; }
 
         void setWeight( T weight ){ _weight = weight; }
@@ -58,7 +60,16 @@ template< typename T > class Edge{
     private:
         int _to;
         int _weight;
+        int _from = -1;
 };
+
+template< typename T > std::ostream& operator<<( std::ostream& os, const Edge< T >& edge ){
+    os << "Edge";
+    if( edge.from() != -1 ){
+        os << " from " << edge.from();
+    }
+    os << " to " << edge.to() << " with weight " << edge.weight();
+}
 
 
 template< typename T > class GraphLW{
