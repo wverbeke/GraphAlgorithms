@@ -27,28 +27,36 @@ template< typename T > std::pair< std::vector< int >, std::vector< int > > count
 }
 
 
-std::pair< int, int > startEndNode( const std::vector< int >& in, const std::vector< int >& out ){
+bool hasEulerianPath( const std::vector< int >& in, const std::vector< int >& out ){
     size_t num_start = 0;
     size_t num_end = 0;
-    int start_node, end_node;
     for( size_t i = 0; i < in.size(); ++i ){
 
         //no eulerian path can exist
-        if( std::abs( out[i] - in[i] ) > 1 ) return {-1, -1};
+        if( std::abs( out[i] - in[i] ) > 1 ) false;
 
         if( ( out[i] - in[i] ) == 1 ){
             ++num_start;
-            start_node = i;
         } else if( ( in[i] - out[i] ) == 1 ){
             ++num_end;
-            end_node = i;
         }
-
         if( num_start > 1 || num_end > 1 ){
-            return {-1, -1};
+            return false;
         }
     }
-    return {start_node, end_node};
+    return true;
+}
+
+
+int findStartNode( const std::vector< int >& in, const std::vector< int >& out ){
+    int start = 0;
+    for( size_t i = 0; i < in.size(); ++i ){
+        if( out[i] - in[i] == 1 ) return i;
+
+        //make sure not to start at disconnected singleton without edges
+        if( out[i] > 0 ) start = i;
+    }
+    return start;
 }
 
 
@@ -76,11 +84,8 @@ template< typename T > std::list< int > eulerianPath( const GraphLW< T >& graph 
     auto out = in_out.second;
 
     //find start and end node, and verify an eulerian path exists
-    auto start_end = startEndNode( in, out );
-    auto start = start_end.first;
-    auto end = start_end.second;
-
-    if( start == -1 || end == -1 ) return std::list< int >();
+    if( !hasEulerianPath( in, out ) ) return std::list< int >();
+    auto start = findStartNode( in, out );
 
     //make a vectors with all the edges for each node for easy accessing
     std::vector< std::vector< Edge< T > > > edge_vec( graph.numNodes() );
