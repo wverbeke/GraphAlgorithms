@@ -48,6 +48,7 @@ class GraphL{
 
 template< typename T > class Edge{
     public:
+        Edge( int t ) : _to( t ) {}
         Edge( int t, T w ) : _to( t ), _weight( w ) {}
         Edge( int f, int t, T w ) : _from( f ), _to( t ), _weight( w ) {}
 
@@ -62,7 +63,7 @@ template< typename T > class Edge{
 
     private:
         int _to;
-        T _weight;
+        T _weight = 1;
         int _from = -1;
 };
 
@@ -78,14 +79,22 @@ template< typename T > std::ostream& operator<<( std::ostream& os, const Edge< T
 template< typename T > class GraphLW{
 
     public:
-        using iterator = typename std::map< int, std::list< Edge< T > > >::iterator;
-        using const_iterator = typename std::map< int, std::list< Edge< T > > >::const_iterator;
+        using iterator = typename std::map< int, std::vector< Edge< T > > >::iterator;
+        using const_iterator = typename std::map< int, std::vector< Edge< T > > >::const_iterator;
+        using size_type = typename std::map< int, std::vector< Edge< T > > >::size_type;
 
         GraphLW() = default;
-        void addNode( int i, const std::list< Edge< T > >& l ){ _adjecency_lists[i] = l; }
-        const std::list< Edge< T > >& adList( int i ) const{ return _adjecency_lists.at( i ); }
+        void addNode( int i, const std::vector< Edge< T > >& l ){ _adjecency_lists[i] = l; }
+        const std::vector< Edge< T > >& adList( int i ) const{ return _adjecency_lists.at( i ); }
 
-        size_t numNodes() const{ return _adjecency_lists.size(); }
+        size_type numNodes() const{ return _adjecency_lists.size(); }
+        size_type numEdges() const{
+            size_type count = 0;
+            for( const auto& entry : _adjecency_lists ){
+                count += entry.second.size();
+            }
+            return count;
+        }
         
         iterator begin(){ return _adjecency_lists.begin(); }
         const_iterator begin() const{ return _adjecency_lists.cbegin(); }
@@ -105,7 +114,7 @@ template< typename T > class GraphLW{
         }
 
     private:
-        std::map< int, std::list< Edge< T > > > _adjecency_lists;
+        std::map< int, std::vector< Edge< T > > > _adjecency_lists;
 };
 
 
