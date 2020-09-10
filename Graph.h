@@ -76,6 +76,11 @@ template< typename T > std::ostream& operator<<( std::ostream& os, const Edge< T
 }
 
 
+template< typename T > bool operator<( const Edge< T >& lhs, const Edge< T >& rhs ){
+    return lhs.weight() < rhs.weight();
+}
+
+
 template< typename T > class GraphLW{
 
     public:
