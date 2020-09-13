@@ -6,6 +6,7 @@
 #include "FordFulkerson.h"
 #include "EdmondsKarp.h"
 #include "CapacityScaling.h"
+#include "Dinic.h"
 
 
 Graph< float > test_graph(){
@@ -53,5 +54,9 @@ int main(){
     graph = test_graph();
     max_flow = fordFulkerson_DFS_capacityScaling( graph, 9, 10 );
     std::cout << "max flow with capacity scaling = " << max_flow << std::endl;
+
+    graph = test_graph();
+    max_flow = dinic( graph, 9, 10 );
+    std::cout << "max flow with Dinic's algorithm = " << max_flow << std::endl;
     return 0;
 }
