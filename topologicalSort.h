@@ -9,10 +9,10 @@
 
 
 void dfs( const GraphL& graph, int start_node, std::vector< bool >& visited, std::vector< int >& traversion ){
-    if( visited[ start_node ] ) return;
     visited[ start_node ] = true;
     
     for( const auto& node : graph.adlist( start_node ) ){
+        if( visited[ node ] ) continue;
         dfs( graph, node, visited, traversion );
     }
     traversion.push_back( start_node );
