@@ -4,6 +4,7 @@
 
 #include "Graph.h"
 #include "FordFulkerson.h"
+#include "EdmondsKarp.h"
 
 
 Graph< float > test_graph(){
@@ -42,7 +43,11 @@ int main(){
     Graph< float > graph = test_graph();
 
     auto max_flow = fordFulkerson_DFS( graph, 9, 10 );
-    std::cout << "max flow = " << max_flow << std::endl;
+    std::cout << "max flow with DFS augmentation = " << max_flow << std::endl;
+
+    graph = test_graph();
+    max_flow = fordFulkerson_edmondsKarp( graph, 9, 10 );
+    std::cout << "max flow with Edmonds Karp augmentation = " << max_flow << std::endl;
 
     return 0;
 }

@@ -13,9 +13,7 @@
 
 template< typename T > T depthFirstSearch( Graph< T >& graph, int start_node, int drain, T flow, std::vector< bool >& visited ){
 
-    std::cout << "node : " << start_node << "\tflow = " << flow << std::endl;
     if( start_node == drain ){
-        std::cout << "reached end with flow " << flow << std::endl;
         return flow;
     }
     visited[ start_node ] = true;
@@ -46,7 +44,6 @@ template< typename T > T fordFulkerson_DFS( Graph< T >& graph, int source, int d
     while( flow > 0 ){
         std::vector< bool > visited( graph.numNodes(), false );
         flow = depthFirstSearch( graph, source, drain, flow, visited );
-        std::cout << "flow = " << flow << std::endl;
         total_flow += flow;
     }
     return total_flow;
