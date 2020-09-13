@@ -8,11 +8,11 @@
 
 void depthFirstSearch_recursion( const GraphL& graph, int node, std::vector< bool >& visited, std::list< int >& traversion ){
 
-    if( visited[ node ] ) return;
-    else visited[ node ] = true;
+    visited[ node ] = true;
     traversion.push_back( node );
     
     for( const auto& entry : graph.adlist( node ) ){
+        if( visited[ entry ] ) continue;
         depthFirstSearch_recursion( graph, entry, visited, traversion );
     }
 }
@@ -20,10 +20,6 @@ void depthFirstSearch_recursion( const GraphL& graph, int node, std::vector< boo
 
 std::list<int> depthFirstSearch( const GraphL& graph, int node, std::vector< bool >& visited ){//, bool keep_visited = false ){
     
-    //static std::vector< bool > visited;
-    //if( visited.empty() || !keep_visited ){
-    //    visited = std::vector< bool >( graph.numNodes() );
-    //}
     std::list< int > traversion;
     depthFirstSearch_recursion( graph, node, visited, traversion );
     return traversion;
@@ -38,7 +34,6 @@ std::map< int, std::list< int > > connectedComponents( const GraphL& graph ){
         auto node = item.first;
         if( visited[ node ] ) continue;
         auto traversion = depthFirstSearch( graph, node, visited );
-        ret[current_index] = std::list< int >();
         for( const auto& entry : traversion ){
             ret[current_index].push_back( entry  );
         }
