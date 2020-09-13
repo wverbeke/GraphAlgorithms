@@ -5,6 +5,7 @@
 #include "Graph.h"
 #include "FordFulkerson.h"
 #include "EdmondsKarp.h"
+#include "CapacityScaling.h"
 
 
 Graph< float > test_graph(){
@@ -49,5 +50,8 @@ int main(){
     max_flow = fordFulkerson_edmondsKarp( graph, 9, 10 );
     std::cout << "max flow with Edmonds Karp augmentation = " << max_flow << std::endl;
 
+    graph = test_graph();
+    max_flow = fordFulkerson_DFS_capacityScaling( graph, 9, 10 );
+    std::cout << "max flow with capacity scaling = " << max_flow << std::endl;
     return 0;
 }
