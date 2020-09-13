@@ -69,12 +69,8 @@ template< typename T > void print( const T& container ){
 
 int main(){
 
-    //GraphL test = testGraph();
-    //depthFirstSearch( test, 0 );
-
     GraphL disc = disconnected();
 
-    /*
     auto connected = connectedComponents( disc );
     for( const auto& entry : connected ){
         std::cout << "index " << entry.first << " : ";
@@ -83,7 +79,6 @@ int main(){
         }
         std::cout << std::endl;
     }
-    */
 
     GraphL test = testGraph();
     auto path = shortestPath( test, 7, 0);
