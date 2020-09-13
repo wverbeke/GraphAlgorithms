@@ -82,19 +82,6 @@ std::pair< int, int > begin_end_grid( const std::vector< std::vector< char > >& 
     int begin = begin_end_index.first.first * num_columns + begin_end_index.first.second;
     int end = begin_end_index.second.first * num_columns + begin_end_index.second.second;
     return { begin, end };
-    /*
-    std::pair< int, int > ret = {-1, -1};
-    for( size_t r = 0; r < grid.size(); ++r ){
-        for( size_t c = 0; c < grid[r].size(); ++c ){
-            if( grid[ r ][ c ] == 'S' ){
-                ret.first = num_columns*r + c;
-            } else if( grid[ r ][ c ] == 'E' ){
-                ret.second = num_columns*r + c;
-            }
-        }
-    }
-    return ret;
-    */
 }
 
 
@@ -188,14 +175,9 @@ std::vector< std::pair< int, int > > pathOnGrid( const std::vector< std::vector<
             prev_x[x][y] = current_x;
             prev_y[x][y] = current_y;
 
-            //BREAKS ONLY FOR LOOP
-            //if( x == end_x && y == end_y ){
-            //    break;
-            //}
             ++size_next_level;
         }
         if( size_current_level == 0 ){
-            std::cout << "size_next_level = " << size_next_level << std::endl;
             size_current_level = size_next_level;
             size_next_level = 0;
             ++steps;
@@ -203,50 +185,38 @@ std::vector< std::pair< int, int > > pathOnGrid( const std::vector< std::vector<
         
     }
 
-    std::cout << "needed " << steps << " steps " << std::endl;
-
-    //std::cout << prev_x[ start_x ][ start_y ] << "\t" << prev_y[ start_x ][ start_y ] << std::endl;
-    //std::cout << prev_x[ end_x ][ end_y ] << "\t" << prev_y[ end_x ][ end_y ] << std::endl;
-    
     //reconstruct path
     std::vector< std::pair< int, int > > path;
     int current_x = end_x;
     int current_y = end_y;
     path.push_back( { end_x, end_y } );
-    //while( current_x != -1 && current_y != -1 ){
     while( true ){
         int x_prev = prev_x[ current_x ][ current_y ];
         int y_prev = prev_y[ current_x ][ current_y ];
         current_x = x_prev;
         current_y = y_prev;
         if( current_x == -1 || current_y == -1 ) break;
-        //std::cout << "current_x = " << current_x << "\tcurrent_y = " << current_y << std::endl;
         path.push_back( { current_x, current_y } );
     }
     std::reverse( path.begin(), path.end() );
-
 
     if( path.front().first == start_x && path.front().second == start_y ){
         return path;
     } else {
         return std::vector< std::pair< int, int > >();
     }
-    //return std::vector< std::pair< int, int > >();
 }
 
 
 
 void test_random_graph(){
     
-    //auto grid = testGrid();
-
 	auto grid = randomGrid( 50, 50 );
     auto graph = gridToGraph( grid );
     auto start_end = begin_end_grid( grid );
     auto path = shortestPath( graph, start_end.first, start_end.second );
 
     auto pathIndices = pathToGridIndices( path, grid[0].size() );
-	//std::cout << "path.size() = " << path.size() << std::endl;
     for( auto& entry : pathIndices ){
 		if( grid[entry.first][entry.second] != 'S' && grid[entry.first][entry.second] != 'E' ){
         	grid[entry.first][entry.second] = 'P';
@@ -258,9 +228,8 @@ void test_random_graph(){
 
 void test_random_direct(){
     
-    auto grid = testGrid();
+    auto grid = randomGrid( 50, 50 );
 
-	//auto grid = randomGrid( 50, 50 );
     auto start_end = begin_end( grid );
 
     std::cout << "start path finding" << std::endl;
@@ -278,12 +247,8 @@ void test_random_direct(){
 
 
 int main(){
-	test_random_direct();
-	//for( int i = 0; i < 10; ++i ){
-	//	test_random_direct();
-	//	for( int i = 0; i < 10; ++i ){
-	//		std::cout << std::endl;
-	//	}
-	//}
+    for( size_t i = 0; i < 10; ++i ){
+        test_random_direct();
+    }
 	return 0;
 }
